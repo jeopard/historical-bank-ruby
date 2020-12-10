@@ -12,6 +12,8 @@ As the HTTP requests to OER can add latency to your calls, a `RatesStore` (cache
 
 You can use it as your default bank and keep calling the standard `money` gem methods (`Money#exchange_to`, `Bank#exchange_with`). On top of that, we've added a few more methods that allow accessing historical rates (`Money#exchange_to_historical`, `Bank#exchange_with_historical`).
 
+This gem was initially developed in Skyscanner. However as far as I know, Skyscanner no longer does Ruby development, so I doubt that the [original repo](https://github.com/Skyscanner/historical-bank-ruby) will ever receive any updates.
+
 
 ### Base currency
 
