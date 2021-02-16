@@ -22,8 +22,8 @@ Gem::Specification.new do |s|
   s.summary     = 'Historical Bank'
   s.description = 'A `Money::Bank::Base` with historical exchange rates'
   s.authors     = ['Kostis Dadamis', 'Emili Parreno']
-  s.email       = ['kostis.dadamis@skyscanner.net']
-  s.homepage    = 'https://github.com/Skyscanner/historical-bank-ruby'
+  s.email       = ['provlhma@gmail.com']
+  s.homepage    = 'https://github.com/jeopard/historical-bank-ruby'
   s.license     = 'Apache-2.0'
 
   require 'rake'
