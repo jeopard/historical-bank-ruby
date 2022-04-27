@@ -45,11 +45,12 @@ class Money
       #
       # - +base_currency+ - The base currency relative to which all rates are stored
       # - +redis_url+ - The URL of the Redis server
+      # - +redis_params+ - parameters passed to Redis.new
       # - +namespace+ - Namespace with which to prefix all Redis keys
 
-      def initialize(base_currency, redis_url, namespace)
+      def initialize(base_currency, redis_url, redis_params, namespace)
         @base_currency = base_currency
-        @redis = Redis.new(url: redis_url)
+        @redis = Redis.new({url: redis_url}.merge(redis_params))
         @namespace = namespace
       end
 

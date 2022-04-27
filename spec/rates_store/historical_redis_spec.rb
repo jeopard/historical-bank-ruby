@@ -26,7 +26,7 @@ class Money
 
       let(:base_currency) { Currency.new('EUR') }
       let(:namespace) { 'currency_test' }
-      let(:store) { HistoricalRedis.new(base_currency, redis_url, namespace) }
+      let(:store) { HistoricalRedis.new(base_currency, redis_url, {}, namespace) }
       let(:key_prefix) { 'currency_test:EUR' }
 
       let(:usd_date_rate_hash) do

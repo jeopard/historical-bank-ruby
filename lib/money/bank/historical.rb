@@ -30,8 +30,9 @@ class Money
 
         # +Money::Currency+ relative to which all exchange rates will be cached
         attr_accessor :base_currency
-        # URL of the Redis server
+        # URL of the Redis server and other redis params
         attr_accessor :redis_url
+        attr_accessor :redis_params
         # Redis namespace in which the exchange rates will be cached
         attr_accessor :redis_namespace
         # OpenExchangeRates app ID
@@ -44,6 +45,7 @@ class Money
         def initialize
           @base_currency = Currency.new('EUR')
           @redis_url = 'redis://localhost:6379'
+          @redis_params = {}
           @redis_namespace = 'currency'
           @oer_app_id = nil
           @timeout = 15
@@ -61,6 +63,7 @@ class Money
       # - +oer_account_type+ - (optional) your OpenExchangeRates account type. Choose one of the values in the +Money::RatesProvider::OpenExchangeRates::AccountType+ module (default: +Money::RatesProvider::OpenExchangeRates::AccountType::ENTERPRISE+)
       # - +base_currency+ - (optional) +Money::Currency+ relative to which all the rates are stored (default: EUR)
       # - +redis_url+ - (optional) the URL of the Redis server (default: +redis://localhost:6379+)
+      # - +redis_params+ - (optional) parameters passed to Redis.new, for example to configure ssl behaviour
       # - +redis_namespace+ - (optional) Redis namespace to prefix all keys (default: +currency+)
       # - +timeout+ - (optional) set a timeout for the OER calls (default: 15 seconds)
       #
@@ -71,6 +74,7 @@ class Money
       #     config.oer_account_type = Money::RatesProvider::OpenExchangeRates::AccountType::FREE
       #     config.base_currency = Money::Currency.new('USD')
       #     config.redis_url = 'redis://localhost:6379'
+      #     config.redis_params = { ssl_params: { verify_mode: OpenSSL::SSL::VERIFY_NONE } }
       #     config.redis_namespace = 'currency'
       #     config.timeout = 20
       #   end
@@ -87,6 +91,7 @@ class Money
         @rates = {}
         @store = RatesStore::HistoricalRedis.new(@base_currency,
                                                  Historical.configuration.redis_url,
+                                                 Historical.configuration.redis_params,
                                                  Historical.configuration.redis_namespace)
         @provider = RatesProvider::OpenExchangeRates.new(Historical.configuration.oer_app_id,
                                                          @base_currency,
