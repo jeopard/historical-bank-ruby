@@ -1,6 +1,4 @@
 #
-# Copyright 2017 Skyscanner Limited.
-#
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -18,7 +16,7 @@
 
 Gem::Specification.new do |s|
   s.name        = 'historical-bank'
-  s.version     = '0.1.4'
+  s.version     = '0.1.5'
   s.summary     = 'Historical Bank'
   s.description = 'A `Money::Bank::Base` with historical exchange rates'
   s.authors     = ['Kostis Dadamis', 'Emili Parreno']
@@ -27,10 +25,10 @@ Gem::Specification.new do |s|
   s.license     = 'Apache-2.0'
 
   require 'rake'
-  s.files = FileList['lib/**/*.rb', 'Gemfile', 'examples/*.rb',
-                     'historical-bank.gemspec', 'spec/**/*.rb'].to_a
-  s.files += ['README.md', 'LICENSE', 'CONTRIBUTING.md', 'AUTHORS',
-              'CHANGELOG.md', 'spec/fixtures/time-series-2015-09.json']
+  s.files = Dir['lib/**/*.rb', 'examples/*.rb', 'spec/**/*.rb']
+  s.files += ['Gemfile', 'historical-bank.gemspec', 'README.md', 'LICENSE',
+              'CONTRIBUTING.md', 'AUTHORS', 'CHANGELOG.md',
+              'spec/fixtures/time-series-2015-09.json']
 
   s.test_files = s.files.grep(%r{^spec/})
 

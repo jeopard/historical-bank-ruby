@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.5
+- Use `Dir` instead of `FileList` in the gemspec to resolve [external dependency error](https://github.com/rubygems/rubygems/issues/3313)
+
+## 0.1.4
+- Update Travis config and docs
+
 ## 0.1.3
 - Support `redis` gem versions '>=3.3', '< 4.1' (#3)
 
