@@ -1,7 +1,7 @@
 # historical-bank-ruby
 
 [![Gem Version](https://badge.fury.io/rb/historical-bank.svg)](https://badge.fury.io/rb/historical-bank)
-[![Build Status](https://travis-ci.org/jeopard/historical-bank-ruby.svg?branch=master)](https://travis-ci.org/jeopard/historical-bank-ruby)
+[![Build Status](https://app.travis-ci.com/jeopard/historical-bank-ruby.svg?branch=master)](https://app.travis-ci.com/github/jeopard/historical-bank-ruby)
 
 ## Description
 
