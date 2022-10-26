@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.1.6
+- Update how Redis pipeline command is made. The old way will be removed in Redis 5.0.0
+
 ## 0.1.5
 - Use `Dir` instead of `FileList` in the gemspec to resolve [external dependency error](https://github.com/rubygems/rubygems/issues/3313)
 
