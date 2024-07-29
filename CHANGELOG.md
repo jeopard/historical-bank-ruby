@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.1.7
+- Fix bug with Ruby memory cache not used. Thank you @stanley90!!
+
 ## 0.1.6
 - Update how Redis pipeline command is made. The old way will be removed in Redis 5.0.0
 

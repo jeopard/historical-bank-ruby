@@ -357,6 +357,38 @@ class Money
 
             it { is_expected.to eq expected_result }
           end
+
+          context 'when rates do not exist anywhere' do
+            let(:from_currency_base_rates_store) { nil }
+            let(:to_currency_base_rates_store) { nil }
+            let(:rates_provider) { nil }
+
+            it 'raises an error' do
+              expect { subject }.to raise_error(NoMethodError)
+            end
+          end
+
+          context 'when rates exist in Redis but then disappear from Redis' do
+            let(:from_currency_base_rates_store) { from_currency_base_rates }
+            let(:to_currency_base_rates_store) { to_currency_base_rates }
+            let(:rates_provider) { nil }
+
+            it 'uses the value cached in memory' do
+              # first get it from Redis
+              expect_any_instance_of(RatesStore::HistoricalRedis).to receive(:get_rates)
+                .with(from_currency)
+              expect_any_instance_of(RatesStore::HistoricalRedis).to receive(:get_rates)
+                .with(to_currency)
+              expect(bank.exchange_with_historical(from_money, to_currency, datetime)).to eq expected_result
+
+              # then get it from memory
+              expect_any_instance_of(RatesStore::HistoricalRedis).not_to receive(:get_rates)
+                .with(from_currency)
+              expect_any_instance_of(RatesStore::HistoricalRedis).not_to receive(:get_rates)
+                .with(to_currency)
+              expect(bank.exchange_with_historical(from_money, to_currency, datetime)).to eq expected_result
+            end
+          end
         end
 
         # taken from real rates from XE.com
