@@ -51,25 +51,31 @@ class Money
           let(:base_currency_iso_code) { 'USD' }
           let(:response_body) { File.read('./spec/fixtures/historical-2010-10-01.json') }
 
-          it 'format response similar to the full-month/time-series response' do
-            expect(subject.keys =~ ['base', 'rates', 'start_date', 'end_date'])
+          it 'returns currency codes as keys' do
+            expect(subject.keys).not_to include('base', 'rates', 'start_date', 'end_date')
+            expect(subject.keys).to all(match(/^[A-Z]{3}$/))
+            expect(subject.keys).to include('USD', 'EUR', 'GBP')
           end
 
           it 'return rates only for given date' do
-            dates = subject.map { |country, dates_hash| dates_hash.keys }.flatten.uniq
-            expect(dates.size == 1)
-            expect(dates.first == '2010-10-01')
+            dates = subject.map { |country, dates_hash|
+              next unless country.match?(/^[A-Z]{3}$/)
+              dates_hash.keys
+            }.flatten.compact.uniq
+
+            expect(dates.size).to eq(1)
+            expect(dates.first).to eq('2010-10-01')
           end
 
           it 'returns correct rates' do
-            expect(subject['VND']['2010-10-01']).to eq 19474.963646.to_d
-            expect(subject['EUR']['2010-10-01']).to eq 0.726556.to_d
-            expect(subject['CAD']['2010-10-01']).to eq 1.022502.to_d
-            expect(subject['CNY']['2010-10-01']).to eq 6.691335.to_d
+            expect(subject['VND']['2010-10-01']).to eq BigDecimal('19474.963646')
+            expect(subject['EUR']['2010-10-01']).to eq BigDecimal('0.726556')
+            expect(subject['CAD']['2010-10-01']).to eq BigDecimal('1.022502')
+            expect(subject['CNY']['2010-10-01']).to eq BigDecimal('6.691335')
           end
         end
       end
-      
+
 
       describe '#fetch_rates with UNLIMITED account' do
         let(:provider) { OpenExchangeRates.new(app_id, base_currency, timeout, OpenExchangeRates::AccountType::UNLIMITED) }
@@ -91,7 +97,7 @@ class Money
         subject { provider.fetch_rates(date) }
 
         context 'when date is before 1999' do
-          let(:date) { Faker::Date.between(Date.new(1900, 1, 1), Date.new(1998, 12, 31)) }
+          let(:date) { Faker::Date.between(from: Date.new(1900, 1, 1), to: Date.new(1998, 12, 31)) }
           let(:status) { 200 }
           let(:response_body) { '' }
 
@@ -137,12 +143,12 @@ class Money
               let(:response_body) { File.read('./spec/fixtures/time-series-2015-09.json') }
 
               it 'returns correct rates' do
-                expect(subject['BZD']['2015-09-01']).to eq 2.25696.to_d
-                expect(subject['AED']['2015-09-05']).to eq 4.094833.to_d
-                expect(subject['QAR']['2015-09-12']).to eq 4.126591.to_d
-                expect(subject['GBP']['2015-09-15']).to eq 0.734509.to_d
-                expect(subject['USD']['2015-09-22']).to eq 1.112897.to_d
-                expect(subject['ZWL']['2015-09-30']).to eq 360.157304.to_d
+                expect(subject['BZD']['2015-09-01']).to eq BigDecimal('2.25696')
+                expect(subject['AED']['2015-09-05']).to eq BigDecimal('4.094833')
+                expect(subject['QAR']['2015-09-12']).to eq BigDecimal('4.126591')
+                expect(subject['GBP']['2015-09-15']).to eq BigDecimal('0.734509')
+                expect(subject['USD']['2015-09-22']).to eq BigDecimal('1.112897')
+                expect(subject['ZWL']['2015-09-30']).to eq BigDecimal('360.157304')
               end
             end
 
@@ -177,24 +183,24 @@ class Money
               let(:expected_result) do
                 {
                   'VND' => {
-                    '2010-10-02' => 1.1.to_d,
-                    '2010-10-03' => 1.2.to_d,
-                    '2010-10-04' => 1.3.to_d
+                    '2010-10-02' => BigDecimal('1.1'),
+                    '2010-10-03' => BigDecimal('1.2'),
+                    '2010-10-04' => BigDecimal('1.3')
                   },
                   'USD' => {
-                    '2010-10-02' => 2.1.to_d,
-                    '2010-10-03' => 2.2.to_d,
-                    '2010-10-04' => 2.3.to_d
+                    '2010-10-02' => BigDecimal('2.1'),
+                    '2010-10-03' => BigDecimal('2.2'),
+                    '2010-10-04' => BigDecimal('2.3')
                   },
                   'CAD' => {
-                    '2010-10-02' => 3.1.to_d,
-                    '2010-10-03' => 3.2.to_d,
-                    '2010-10-04' => 3.3.to_d
+                    '2010-10-02' => BigDecimal('3.1'),
+                    '2010-10-03' => BigDecimal('3.2'),
+                    '2010-10-04' => BigDecimal('3.3')
                   },
                   'CNY' => {
-                    '2010-10-02' => 4.1.to_d,
-                    '2010-10-03' => 4.2.to_d,
-                    '2010-10-04' => 4.3.to_d
+                    '2010-10-02' => BigDecimal('4.1'),
+                    '2010-10-03' => BigDecimal('4.2'),
+                    '2010-10-04' => BigDecimal('4.3')
                   }
                 }
               end
@@ -239,7 +245,7 @@ class Money
             end
           end
         end
-        
+
 
       end
     end

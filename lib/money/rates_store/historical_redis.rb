@@ -90,9 +90,10 @@ class Money
         end
 
         @redis.pipelined do |pipeline|
-          currency_date_rate_hash.each do |iso_currency, iso_date_rate_hash|
-            k = key(iso_currency)
-            pipeline.mapped_hmset(k, iso_date_rate_hash)
+          currency_date_rate_hash.each do |iso_currency_code, iso_date_rate_hash|
+            k = key(iso_currency_code)
+            string_rates = iso_date_rate_hash.transform_values(&:to_s)
+            pipeline.mapped_hmset(k, string_rates)
           end
         end
       rescue Redis::BaseError => e
@@ -115,7 +116,7 @@ class Money
         iso_date_rate_hash = @redis.hgetall(k)
 
         iso_date_rate_hash.each do |iso_date, rate_string|
-          iso_date_rate_hash[iso_date] = rate_string.to_d
+          iso_date_rate_hash[iso_date] = BigDecimal(rate_string)
         end
       rescue Redis::BaseError => e
         raise RequestFailed, 'Error while retrieving rates for '\

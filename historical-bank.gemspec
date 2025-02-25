@@ -24,7 +24,6 @@ Gem::Specification.new do |s|
   s.homepage    = 'https://github.com/jeopard/historical-bank-ruby'
   s.license     = 'Apache-2.0'
 
-  require 'rake'
   s.files = Dir['lib/**/*.rb', 'examples/*.rb', 'spec/**/*.rb']
   s.files += ['Gemfile', 'historical-bank.gemspec', 'README.md', 'LICENSE',
               'CONTRIBUTING.md', 'AUTHORS', 'CHANGELOG.md',
@@ -38,17 +37,18 @@ Gem::Specification.new do |s|
 
   s.require_path = 'lib'
 
-  s.required_ruby_version = '>= 2.0.0'
+  s.required_ruby_version = '>= 3.1.0'
 
-  s.add_runtime_dependency 'money',    '~> 6.7'
-  s.add_runtime_dependency 'httparty', '~> 0.14'
-  s.add_runtime_dependency 'redis',    ['>=3.3', '~> 4.0']
+  s.add_runtime_dependency 'bigdecimal', '>= 3.0'
+  s.add_runtime_dependency 'httparty',   '~> 0.19'
+  s.add_runtime_dependency 'money',      '~> 6.7'
+  s.add_runtime_dependency 'redis',      '>= 4.0'
 
-  s.add_development_dependency 'rspec',      '~> 3.5'
-  s.add_development_dependency 'pry-byebug', '~> 3.4'
-  s.add_development_dependency 'rubocop',    '~> 0.52'
-  s.add_development_dependency 'rack-test',  '~> 0.6'
-  s.add_development_dependency 'webmock',    '~> 2.3'
-  s.add_development_dependency 'faker',      '~> 1.6'
-  s.add_development_dependency 'timecop',    '~> 0.8'
+  s.add_development_dependency 'faker'
+  s.add_development_dependency 'pry-byebug'
+  s.add_development_dependency 'rack-test'
+  s.add_development_dependency 'rspec'
+  s.add_development_dependency 'rubocop'
+  s.add_development_dependency 'timecop'
+  s.add_development_dependency 'webmock'
 end

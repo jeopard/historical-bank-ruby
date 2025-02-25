@@ -45,23 +45,23 @@ class Money
       describe '#add_rates' do
         let(:usd_date_rate_hash) do
           {
-            '2015-09-10' => 0.11111.to_d,
-            '2015-09-11' => 0.22222.to_d,
-            '2015-09-12' => 0.33333.to_d
+            '2015-09-10' => BigDecimal('0.11111'),
+            '2015-09-11' => BigDecimal('0.22222'),
+            '2015-09-12' => BigDecimal('0.33333')
           }
         end
         let(:currency_date_rate_hash) do
           {
             'USD' => usd_date_rate_hash,
             'GBP' => {
-              '2015-09-10' => 0.44444.to_d,
-              '2015-09-11' => 0.55555.to_d,
-              '2015-09-12' => 0.66666.to_d
+              '2015-09-10' => BigDecimal('0.44444'),
+              '2015-09-11' => BigDecimal('0.55555'),
+              '2015-09-12' => BigDecimal('0.66666')
             },
             'VND' => {
-              '2015-09-10' => 0.77777.to_d,
-              '2015-09-11' => 0.88888.to_d,
-              '2015-09-12' => 0.99999.to_d
+              '2015-09-10' => BigDecimal('0.77777'),
+              '2015-09-11' => BigDecimal('0.88888'),
+              '2015-09-12' => BigDecimal('0.99999')
             }
           }
         end
@@ -127,7 +127,7 @@ class Money
         end
 
         context 'when datetime is a Date' do
-          let(:datetime) { Faker::Date.between(Date.today - 100, Date.today + 100) }
+          let(:datetime) { Faker::Date.between(from: Date.today - 100, to: Date.today + 100) }
           let(:from_currency) { 'EUR' }
           let(:to_currency) { Money::Currency.new('USD') }
 
@@ -179,7 +179,7 @@ class Money
           end
 
           context 'and it is a Date' do
-            let(:datetime) { Faker::Date.between(Date.today - 100, Date.today + 100) }
+            let(:datetime) { Faker::Date.between(from: Date.today - 100, to: Date.today + 100) }
 
             it 'returns the correct rate' do
               expect(subject).to be_within(0.00000001).of(rate)
@@ -202,10 +202,10 @@ class Money
         let(:from_currency) { Currency.wrap('USD') }
         let(:from_money) { Money.new(10_000, from_currency) }
         let(:to_currency) { Currency.wrap('GBP') }
-        let(:datetime) { Faker::Time.between(Date.today - 300, Date.today - 2) }
+        let(:datetime) { Faker::Time.between(from: Date.today - 300, to: Date.today - 2) }
         let(:date) { datetime.utc.to_date }
-        let(:from_currency_base_rate) { 1.1250721881474421.to_d }
-        let(:to_currency_base_rate) { 0.7346888078084116.to_d }
+        let(:from_currency_base_rate) { BigDecimal('1.1250721881474421') }
+        let(:to_currency_base_rate) { BigDecimal('0.7346888078084116') }
         let(:from_currency_base_rates) do
           {
             (date - 1).iso8601 => rand,
@@ -246,7 +246,7 @@ class Money
         end
 
         describe 'datetime type' do
-          let(:datetime) { Faker::Time.between(Date.today - 300, Date.today - 2) }
+          let(:datetime) { Faker::Time.between(from: Date.today - 300, to: Date.today - 2) }
           let(:date) { datetime.utc.to_date }
           let(:from_currency_base_rates_store) { from_currency_base_rates }
           let(:to_currency_base_rates_store) { to_currency_base_rates }
@@ -401,8 +401,8 @@ class Money
             let(:from_currency) { Currency.wrap('USD') }
             let(:from_money) { Money.new(500_00, from_currency) }
             let(:to_currency) { Currency.wrap('GBP') }
-            let(:from_currency_base_rate) { 1.13597.to_d }
-            let(:to_currency_base_rate) { 0.735500.to_d }
+            let(:from_currency_base_rate) { BigDecimal('1.13597') }
+            let(:to_currency_base_rate) { BigDecimal('0.735500') }
             let(:expected_result) { Money.new(323_73, to_currency) }
 
             it { is_expected.to eq expected_result }
@@ -412,8 +412,8 @@ class Money
             let(:from_currency) { Currency.wrap('INR') }
             let(:from_money) { Money.new(6_516_200, from_currency) }
             let(:to_currency) { Currency.wrap('CAD') }
-            let(:from_currency_base_rate) { 73.5602.to_d }
-            let(:to_currency_base_rate) { 1.46700.to_d }
+            let(:from_currency_base_rate) { BigDecimal('73.5602') }
+            let(:to_currency_base_rate) { BigDecimal('1.46700') }
             let(:expected_result) { Money.new(1_299_52, to_currency) }
 
             it { is_expected.to eq expected_result }
@@ -424,8 +424,8 @@ class Money
             let(:from_currency) { Currency.wrap('SGD') }
             let(:from_money) { Money.new(345_67, from_currency) }
             let(:to_currency) { Currency.wrap('VND') }
-            let(:from_currency_base_rate) { 1.57222.to_d }
-            let(:to_currency_base_rate) { 25_160.75.to_d }
+            let(:from_currency_base_rate) { BigDecimal('1.57222') }
+            let(:to_currency_base_rate) { BigDecimal('25_160.75') }
             let(:expected_result) { Money.new(5_531_870, to_currency) }
 
             it { is_expected.to eq expected_result }
@@ -436,8 +436,8 @@ class Money
             let(:from_currency) { Currency.wrap('CNY') }
             let(:from_money) { Money.new(987_654, from_currency) }
             let(:to_currency) { Currency.wrap('KWD') }
-            let(:from_currency_base_rate) { 7.21517.to_d }
-            let(:to_currency_base_rate) { 0.342725.to_d }
+            let(:from_currency_base_rate) { BigDecimal('7.21517') }
+            let(:to_currency_base_rate) { BigDecimal('0.342725') }
             let(:expected_result) { Money.new(469_142, to_currency) }
 
             it { is_expected.to eq expected_result }
@@ -445,7 +445,7 @@ class Money
         end
 
         context 'when OER client fails with ArgumentError' do
-          let(:datetime) { Faker::Time.between(Date.new(1990, 1, 1), Date.new(1998, 12, 31)) }
+          let(:datetime) { Faker::Time.between(from: Date.new(1990, 1, 1), to: Date.new(1998, 12, 31)) }
           let(:from_currency_base_rates_store) { nil }
           let(:to_currency_base_rates_store) { nil }
           let(:rates_provider) { nil }
@@ -467,8 +467,8 @@ class Money
         let(:from_money) { Money.new(10_000, from_currency) }
         let(:to_currency) { Currency.wrap('GBP') }
         let(:utc_date) { Time.now.utc.to_date }
-        let(:from_currency_base_rate) { 1.1250721881474421.to_d }
-        let(:to_currency_base_rate) { 0.7346888078084116.to_d }
+        let(:from_currency_base_rate) { BigDecimal('1.1250721881474421') }
+        let(:to_currency_base_rate) { BigDecimal('0.7346888078084116') }
         let(:from_currency_base_rates_store) do
           {
             (utc_date - 3).iso8601 => rand,

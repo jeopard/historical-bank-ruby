@@ -31,23 +31,23 @@ class Money
 
       let(:usd_date_rate_hash) do
         {
-          '2015-09-10' => 0.11111.to_d,
-          '2015-09-11' => 0.22222.to_d,
-          '2015-09-12' => 0.33333.to_d
+          '2015-09-10' => BigDecimal('0.11111'),
+          '2015-09-11' => BigDecimal('0.22222'),
+          '2015-09-12' => BigDecimal('0.33333')
         }
       end
       let(:currency_date_rate_hash) do
         {
           'USD' => usd_date_rate_hash,
           'GBP' => {
-            '2015-09-10' => 0.44444.to_d,
-            '2015-09-11' => 0.55555.to_d,
-            '2015-09-12' => 0.66666.to_d
+            '2015-09-10' => BigDecimal('0.44444'),
+            '2015-09-11' => BigDecimal('0.55555'),
+            '2015-09-12' => BigDecimal('0.66666')
           },
           'VND' => {
-            '2015-09-10' => 0.77777.to_d,
-            '2015-09-11' => 0.88888.to_d,
-            '2015-09-12' => 0.99999.to_d
+            '2015-09-10' => BigDecimal('0.77777'),
+            '2015-09-11' => BigDecimal('0.88888'),
+            '2015-09-12' => BigDecimal('0.99999')
           }
         }
       end
@@ -60,23 +60,23 @@ class Money
       describe '#add_rates' do
         let(:expected_stored_hash_usd) do
           {
-            '2015-09-10' => 0.11111.to_d.to_s,
-            '2015-09-11' => 0.22222.to_d.to_s,
-            '2015-09-12' => 0.33333.to_d.to_s
+            '2015-09-10' => BigDecimal('0.11111').to_s,
+            '2015-09-11' => BigDecimal('0.22222').to_s,
+            '2015-09-12' => BigDecimal('0.33333').to_s
           }
         end
         let(:expected_stored_hash_gbp) do
           {
-            '2015-09-10' => 0.44444.to_d.to_s,
-            '2015-09-11' => 0.55555.to_d.to_s,
-            '2015-09-12' => 0.66666.to_d.to_s
+            '2015-09-10' => BigDecimal('0.44444').to_s,
+            '2015-09-11' => BigDecimal('0.55555').to_s,
+            '2015-09-12' => BigDecimal('0.66666').to_s
           }
         end
         let(:expected_stored_hash_vnd) do
           {
-            '2015-09-10' => 0.77777.to_d.to_s,
-            '2015-09-11' => 0.88888.to_d.to_s,
-            '2015-09-12' => 0.99999.to_d.to_s
+            '2015-09-10' => BigDecimal('0.77777').to_s,
+            '2015-09-11' => BigDecimal('0.88888').to_s,
+            '2015-09-12' => BigDecimal('0.99999').to_s
           }
         end
 
@@ -95,8 +95,8 @@ class Money
           let(:preexistent_rates) do
             {
               'USD' => {
-                '2015-09-10' => 0.12345.to_d,
-                '2015-09-11' => 0.09876.to_d
+                '2015-09-10' => BigDecimal('0.12345'),
+                '2015-09-11' => BigDecimal('0.09876')
               }
             }
           end

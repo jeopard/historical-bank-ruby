@@ -1,17 +1,17 @@
 # Contributing to historical-bank-ruby
 
-We're glad you want to make a contribution!  
+We're glad you want to make a contribution!
 
-Fork this repository and send in a pull request when you're finished with your changes. Link any relevant issues in too. 
+Fork this repository and send in a pull request when you're finished with your changes. Link any relevant issues in too.
 
-Take note of the build status of your pull request, only builds that pass will be accepted. Please also keep to our conventions and style so we can keep this repository as clean as possible. 
+Take note of the build status of your pull request, only builds that pass will be accepted. Please also keep to our conventions and style so we can keep this repository as clean as possible.
 
 
 ## Steps
 
 1. Fork the repo
 2. Grab dependencies: `bundle install`
-3. Make sure specs are green: `./spec/redis-server.sh` to run the Redis server and `bundle exec rspec` to run the specs. Alternatively, you can run your own Redis server in `localhost`, and add the port as an env var before running the specs, `REDIS_PORT=6379 bundle exec rspec`
+3. Make sure specs are green: us e.g. `brew services start redis` the run Redis server and then `bundle exec rspec` to run the specs.
 4. Make your changes
 5. Run `rubocop -a`
 6. Make sure specs are still green
@@ -57,7 +57,7 @@ Provider.
 - Add another store (e.g. DynamoDB, MongoDB, Cassandra, Postgres, etc)
 
 
-## License  
+## License
 
 By contributing your code, you agree to license your contribution under the terms of the APLv2: https://github.com/jeopard/historical-bank-ruby/blob/master/LICENSE
 

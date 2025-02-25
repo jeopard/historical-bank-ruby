@@ -17,7 +17,7 @@
 # frozen_string_literal: true
 
 ENV['RACK_ENV'] ||= 'test'
-ENV['REDIS_PORT'] ||= '6390'
+ENV['REDIS_PORT'] ||= '6379'
 
 require 'webmock/rspec'
 require 'faker'
