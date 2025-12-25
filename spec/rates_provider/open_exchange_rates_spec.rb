@@ -52,7 +52,7 @@ class Money
           let(:response_body) { File.read('./spec/fixtures/historical-2010-10-01.json') }
 
           it 'format response similar to the full-month/time-series response' do
-            expect(subject.keys =~ ['base', 'rates', 'start_date', 'end_date'])
+            expect(subject.keys == ['base', 'rates', 'start_date', 'end_date'])
           end
 
           it 'return rates only for given date' do
@@ -91,7 +91,7 @@ class Money
         subject { provider.fetch_rates(date) }
 
         context 'when date is before 1999' do
-          let(:date) { Faker::Date.between(Date.new(1900, 1, 1), Date.new(1998, 12, 31)) }
+          let(:date) { Faker::Date.between(from: Date.new(1900, 1, 1), to: Date.new(1998, 12, 31)) }
           let(:status) { 200 }
           let(:response_body) { '' }
 

@@ -127,7 +127,7 @@ class Money
         end
 
         context 'when datetime is a Date' do
-          let(:datetime) { Faker::Date.between(Date.today - 100, Date.today + 100) }
+          let(:datetime) { Faker::Date.between(from: Date.today - 100, to: Date.today + 100) }
           let(:from_currency) { 'EUR' }
           let(:to_currency) { Money::Currency.new('USD') }
 
@@ -179,7 +179,7 @@ class Money
           end
 
           context 'and it is a Date' do
-            let(:datetime) { Faker::Date.between(Date.today - 100, Date.today + 100) }
+            let(:datetime) { Faker::Date.between(from: Date.today - 100, to: Date.today + 100) }
 
             it 'returns the correct rate' do
               expect(subject).to be_within(0.00000001).of(rate)
@@ -202,7 +202,7 @@ class Money
         let(:from_currency) { Currency.wrap('USD') }
         let(:from_money) { Money.new(10_000, from_currency) }
         let(:to_currency) { Currency.wrap('GBP') }
-        let(:datetime) { Faker::Time.between(Date.today - 300, Date.today - 2) }
+        let(:datetime) { Faker::Time.between(from: Date.today - 300, to: Date.today - 2) }
         let(:date) { datetime.utc.to_date }
         let(:from_currency_base_rate) { 1.1250721881474421.to_d }
         let(:to_currency_base_rate) { 0.7346888078084116.to_d }
@@ -246,7 +246,7 @@ class Money
         end
 
         describe 'datetime type' do
-          let(:datetime) { Faker::Time.between(Date.today - 300, Date.today - 2) }
+          let(:datetime) { Faker::Time.between(from: Date.today - 300, to: Date.today - 2) }
           let(:date) { datetime.utc.to_date }
           let(:from_currency_base_rates_store) { from_currency_base_rates }
           let(:to_currency_base_rates_store) { to_currency_base_rates }
@@ -445,7 +445,7 @@ class Money
         end
 
         context 'when OER client fails with ArgumentError' do
-          let(:datetime) { Faker::Time.between(Date.new(1990, 1, 1), Date.new(1998, 12, 31)) }
+          let(:datetime) { Faker::Time.between(from: Date.new(1990, 1, 1), to: Date.new(1998, 12, 31)) }
           let(:from_currency_base_rates_store) { nil }
           let(:to_currency_base_rates_store) { nil }
           let(:rates_provider) { nil }
