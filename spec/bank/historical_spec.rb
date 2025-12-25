@@ -67,7 +67,7 @@ class Money
         end
         # it's pointing to the same cache as the one in bank
         let(:new_store) do
-          RatesStore::HistoricalRedis.new(base_currency, redis_url, redis_namespace)
+          RatesStore::HistoricalRedis.new(base_currency, redis_url, {}, redis_namespace)
         end
 
         subject { bank.add_rates(currency_date_rate_hash) }
@@ -85,7 +85,7 @@ class Money
 
         # it's pointing to the same cache as the one in bank
         let(:new_store) do
-          RatesStore::HistoricalRedis.new(base_currency, redis_url, redis_namespace)
+          RatesStore::HistoricalRedis.new(base_currency, redis_url, {}, redis_namespace)
         end
         let(:datetime) { Time.utc(2017, 1, 4, 13, 0, 0) }
 
