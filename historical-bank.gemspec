@@ -40,7 +40,7 @@ Gem::Specification.new do |s|
 
   s.required_ruby_version = '>= 3.1.0'
 
-  s.add_runtime_dependency 'money',    '~> 6.7'
+  s.add_runtime_dependency 'money',    '~> 7.0'
   s.add_runtime_dependency 'httparty', '~> 0.14'
   s.add_runtime_dependency 'redis',    ['>=4.0', '~> 5.0']
 
