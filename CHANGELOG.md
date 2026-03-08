@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.8
+
+- Add optional `redis_params` configuration to pass extra parameters to `Redis.new` (e.g. SSL options). Thank you @cattekin!
+- Drop support for EOL Ruby versions; minimum Ruby version is now 3.1.0
+- Update `redis` gem dependency from `['>=3.3', '~> 4.0']` to `['>=4.0', '~> 5.0']` and fix breaking changes
+- Update development dependencies (`rubocop`, `webmock`, `rack-test`, `faker`)
+- Code style improvements via RuboCop
+
 ## 0.1.7
 
 - Fix bug with Ruby memory cache not used. Thank you @stanley90!!
