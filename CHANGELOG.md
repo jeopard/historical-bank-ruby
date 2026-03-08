@@ -1,8 +1,16 @@
 # Changelog
 
-## 0.1.8
+## 0.1.9
 
 - Add support for `money` gem version 7.x (while retaining 6.x compatibility). Note: `money` 7.0 changes the default rounding mode from `ROUND_HALF_EVEN` to `ROUND_HALF_UP`. If upgrading to `money` 7.x, set `Money.rounding_mode = BigDecimal::ROUND_HALF_EVEN` in your initializer to preserve the previous behavior.
+
+## 0.1.8
+
+- Add optional `redis_params` configuration to pass extra parameters to `Redis.new` (e.g. SSL options). Thank you @cattekin!
+- Drop support for EOL Ruby versions; minimum Ruby version is now 3.1.0
+- Update `redis` gem dependency from `['>=3.3', '~> 4.0']` to `['>=4.0', '~> 5.0']` and fix breaking changes
+- Update development dependencies (`rubocop`, `webmock`, `rack-test`, `faker`)
+- Code style improvements via RuboCop
 
 ## 0.1.7
 
