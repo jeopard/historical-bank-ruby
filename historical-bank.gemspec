@@ -16,7 +16,7 @@
 
 Gem::Specification.new do |s|
   s.name        = 'historical-bank'
-  s.version     = '0.1.8'
+  s.version     = '0.1.9'
   s.summary     = 'Historical Bank'
   s.description = 'A `Money::Bank::Base` with historical exchange rates'
   s.authors     = ['Kostis Dadamis', 'Emili Parreno']
@@ -39,7 +39,7 @@ Gem::Specification.new do |s|
   s.required_ruby_version = '>= 3.1.0'
 
   s.add_dependency 'httparty', '~> 0.14'
-  s.add_dependency 'money',    '~> 6.7'
+  s.add_dependency 'money',    '>= 6.7', '< 8'
   s.add_dependency 'redis',    ['>=4.0', '~> 5.0']
 
   s.add_development_dependency 'faker',      '~> 3.0'

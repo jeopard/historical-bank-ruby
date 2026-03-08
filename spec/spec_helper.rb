@@ -25,6 +25,8 @@ require 'timecop'
 require 'byebug'
 require 'money/bank/historical'
 
+Money.rounding_mode = BigDecimal::ROUND_HALF_EVEN
+
 RSpec.configure do |config|
   config.expect_with :rspec
 end
