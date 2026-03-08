@@ -7,16 +7,13 @@ rvm:
   - truffleruby
 install:
   - bundle install --jobs=3 --retry=3
-  - bundle exec appraisal install
 services:
   - redis-server
 cache:
   - bundler
 env:
-  - REDIS_PORT=6379
-gemfile:
-  - gemfiles/money_6.gemfile
-  - gemfiles/money_7.gemfile
+  - REDIS_PORT=6379 BUNDLE_GEMFILE=gemfiles/money_6.gemfile
+  - REDIS_PORT=6379 BUNDLE_GEMFILE=gemfiles/money_7.gemfile
 script:
   - bundle exec rspec
 notifications:
