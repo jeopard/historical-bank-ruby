@@ -30,8 +30,6 @@ Gem::Specification.new do |s|
               'CONTRIBUTING.md', 'AUTHORS', 'CHANGELOG.md',
               'spec/fixtures/time-series-2015-09.json']
 
-  s.test_files = s.files.grep(%r{^spec/})
-
   s.extra_rdoc_files = ['README.md']
 
   s.requirements = 'redis'
@@ -40,16 +38,16 @@ Gem::Specification.new do |s|
 
   s.required_ruby_version = '>= 3.1.0'
 
-  s.add_runtime_dependency 'money',    '~> 7.0'
-  s.add_runtime_dependency 'httparty', '~> 0.14'
-  s.add_runtime_dependency 'redis',    ['>=4.0', '~> 5.0']
+  s.add_dependency 'httparty', '~> 0.14'
+  s.add_dependency 'money',    '~> 7.0'
+  s.add_dependency 'redis',    ['>=4.0', '~> 5.0']
 
-
-  s.add_development_dependency 'rspec',      '~> 3.5'
-  s.add_development_dependency 'pry-byebug', '~> 3.4'
-  s.add_development_dependency 'rubocop',    '~> 0.52'
-  s.add_development_dependency 'rack-test',  '~> 2.0'
-  s.add_development_dependency 'webmock',    '~> 3.0'
   s.add_development_dependency 'faker',      '~> 3.0'
+  s.add_development_dependency 'pry-byebug', '~> 3.4'
+  s.add_development_dependency 'rack-test',  '~> 2.0'
+  s.add_development_dependency 'rspec',      '~> 3.5'
+  s.add_development_dependency 'rubocop',    '~> 1.60'
   s.add_development_dependency 'timecop',    '~> 0.8'
+  s.add_development_dependency 'webmock',    '~> 3.0'
+  s.metadata['rubygems_mfa_required'] = 'true'
 end

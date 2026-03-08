@@ -50,7 +50,7 @@ class Money
 
       def initialize(base_currency, redis_url, redis_params, namespace)
         @base_currency = base_currency
-        @redis = Redis.new({url: redis_url}.merge(redis_params))
+        @redis = Redis.new({ url: redis_url }.merge(redis_params))
         @namespace = namespace
       end
 
@@ -85,8 +85,8 @@ class Money
         if !currency_date_rate_hash[@base_currency.iso_code].nil? &&
            !currency_date_rate_hash[@base_currency.iso_code].values.all? { |r| r == 1 }
 
-          raise ArgumentError, "When base currency #{@base_currency.iso_code} is included "\
-                               "in given Hash #{currency_date_rate_hash}, its rate should  "\
+          raise ArgumentError, "When base currency #{@base_currency.iso_code} is included " \
+                               "in given Hash #{currency_date_rate_hash}, its rate should  " \
                                'be equal to 1'
         end
 
@@ -97,7 +97,7 @@ class Money
           end
         end
       rescue Redis::BaseError => e
-        raise RequestFailed, "Error while storing rates - #{e.message} - "\
+        raise RequestFailed, "Error while storing rates - #{e.message} - " \
                              "rates: #{currency_date_rate_hash}"
       end
 
@@ -119,8 +119,8 @@ class Money
           iso_date_rate_hash[iso_date] = rate_string.to_d
         end
       rescue Redis::BaseError => e
-        raise RequestFailed, 'Error while retrieving rates for '\
-                                "#{currency} - #{e.message}"\
+        raise RequestFailed, 'Error while retrieving rates for ' \
+                             "#{currency} - #{e.message}" \
       end
 
       private

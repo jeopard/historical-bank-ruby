@@ -22,8 +22,8 @@ class Money
   module Bank
     describe Historical do
       let(:base_currency) { Currency.new('EUR') }
-      let(:redis_url) { "redis://localhost:#{ENV['REDIS_PORT']}" }
-      let(:redis) { Redis.new(port: ENV['REDIS_PORT']) }
+      let(:redis_url) { "redis://localhost:#{ENV.fetch('REDIS_PORT', nil)}" }
+      let(:redis) { Redis.new(port: ENV.fetch('REDIS_PORT', nil)) }
       let(:redis_namespace) { 'currency_test' }
       let(:bank) { Historical.instance }
 
@@ -209,14 +209,14 @@ class Money
         let(:from_currency_base_rates) do
           {
             (date - 1).iso8601 => rand,
-            date.iso8601       => from_currency_base_rate,
+            date.iso8601 => from_currency_base_rate,
             (date + 1).iso8601 => rand
           }
         end
         let(:to_currency_base_rates) do
           {
             (date - 1).iso8601 => rand,
-            date.iso8601       => to_currency_base_rate,
+            date.iso8601 => to_currency_base_rate,
             (date + 1).iso8601 => rand
           }
         end
@@ -321,7 +321,7 @@ class Money
             let(:rates_provider) do
               {
                 from_currency.iso_code => from_currency_base_rates,
-                to_currency.iso_code   => to_currency_base_rates
+                to_currency.iso_code => to_currency_base_rates
               }
             end
 
@@ -504,7 +504,7 @@ class Money
   describe Money do
     describe '#exchange_with_historical' do
       let(:base_currency) { Currency.new('EUR') }
-      let(:redis_url) { "redis://localhost:#{ENV['REDIS_PORT']}" }
+      let(:redis_url) { "redis://localhost:#{ENV.fetch('REDIS_PORT', nil)}" }
       let(:redis_namespace) { 'currency_test' }
       let(:rates) do
         {

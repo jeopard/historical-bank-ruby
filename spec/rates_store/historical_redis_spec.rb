@@ -21,8 +21,8 @@ require 'spec_helper'
 class Money
   module RatesStore
     describe HistoricalRedis do
-      let(:redis_url) { "redis://localhost:#{ENV['REDIS_PORT']}" }
-      let(:redis) { Redis.new(port: ENV['REDIS_PORT']) }
+      let(:redis_url) { "redis://localhost:#{ENV.fetch('REDIS_PORT', nil)}" }
+      let(:redis) { Redis.new(port: ENV.fetch('REDIS_PORT', nil)) }
 
       let(:base_currency) { Currency.new('EUR') }
       let(:namespace) { 'currency_test' }

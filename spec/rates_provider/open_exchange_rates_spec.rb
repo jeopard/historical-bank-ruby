@@ -21,7 +21,7 @@ require 'spec_helper'
 class Money
   module RatesProvider
     describe OpenExchangeRates do
-      let(:base_currency_iso_code) { %w(GBP EUR USD).sample }
+      let(:base_currency_iso_code) { %w[GBP EUR USD].sample }
       let(:base_currency) { Currency.wrap(base_currency_iso_code) }
       let(:date) { Date.new(2010, 10, 10) }
       let(:app_id) { SecureRandom.hex }
@@ -31,11 +31,11 @@ class Money
       describe '#fetch_rates with FREE account' do
         let(:provider) { OpenExchangeRates.new(app_id, base_currency, timeout, OpenExchangeRates::AccountType::FREE) }
         let(:url) { 'https://openexchangerates.org/api/historical/2010-10-01.json' }
-        let(:date) { Date.new(2010, 10, 01) }
+        let(:date) { Date.new(2010, 10, 0o1) }
         let(:query) do
           {
             app_id: app_id,
-            base:   base_currency_iso_code,
+            base: base_currency_iso_code
           }
         end
 
@@ -52,24 +52,23 @@ class Money
           let(:response_body) { File.read('./spec/fixtures/historical-2010-10-01.json') }
 
           it 'format response similar to the full-month/time-series response' do
-            expect(subject.keys == ['base', 'rates', 'start_date', 'end_date'])
+            expect(subject.keys == %w[base rates start_date end_date])
           end
 
           it 'return rates only for given date' do
-            dates = subject.map { |country, dates_hash| dates_hash.keys }.flatten.uniq
+            dates = subject.map { |_country, dates_hash| dates_hash.keys }.flatten.uniq
             expect(dates.size == 1)
             expect(dates.first == '2010-10-01')
           end
 
           it 'returns correct rates' do
-            expect(subject['VND']['2010-10-01']).to eq 19474.963646.to_d
+            expect(subject['VND']['2010-10-01']).to eq 19_474.963646.to_d
             expect(subject['EUR']['2010-10-01']).to eq 0.726556.to_d
             expect(subject['CAD']['2010-10-01']).to eq 1.022502.to_d
             expect(subject['CNY']['2010-10-01']).to eq 6.691335.to_d
           end
         end
       end
-      
 
       describe '#fetch_rates with UNLIMITED account' do
         let(:provider) { OpenExchangeRates.new(app_id, base_currency, timeout, OpenExchangeRates::AccountType::UNLIMITED) }
@@ -77,9 +76,9 @@ class Money
         let(:query) do
           {
             app_id: app_id,
-            base:   base_currency_iso_code,
-            start:  '2010-10-01',
-            end:    '2010-10-31'
+            base: base_currency_iso_code,
+            start: '2010-10-01',
+            end: '2010-10-31'
           }
         end
 
@@ -129,9 +128,9 @@ class Money
               let(:query) do
                 {
                   app_id: app_id,
-                  base:   base_currency_iso_code,
-                  start:  '2015-09-01',
-                  end:    '2015-09-30'
+                  base: base_currency_iso_code,
+                  start: '2015-09-01',
+                  end: '2015-09-30'
                 }
               end
               let(:response_body) { File.read('./spec/fixtures/time-series-2015-09.json') }
@@ -150,8 +149,8 @@ class Money
               let(:response_body) do
                 {
                   start_date: '2010-10-01',
-                  end_date:   '2010-10-31',
-                  base:       base_currency_iso_code,
+                  end_date: '2010-10-31',
+                  base: base_currency_iso_code,
                   rates: {
                     '2010-10-02' => {
                       'VND' => 1.1,
@@ -210,10 +209,10 @@ class Money
             let(:query) do
               {
                 app_id: app_id,
-                base:   base_currency_iso_code,
-                start:  '2016-09-01',
+                base: base_currency_iso_code,
+                start: '2016-09-01',
                   # yesterday is the max date
-                end:    '2016-09-22'
+                end: '2016-09-22'
               }
             end
             # doesn't matter, we're checking the query here
@@ -239,8 +238,6 @@ class Money
             end
           end
         end
-        
-
       end
     end
   end
