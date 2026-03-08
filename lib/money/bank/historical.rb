@@ -27,7 +27,6 @@ class Money
     class Historical < Bank::Base
       # Configuration class for +Money::Bank::Historical+
       class Configuration
-
         # +Money::Currency+ relative to which all exchange rates will be cached
         attr_accessor :base_currency
         # URL of the Redis server and other redis params
@@ -165,8 +164,8 @@ class Money
         to_currency = Currency.wrap(to_currency)
 
         if from_currency != @base_currency && to_currency != @base_currency
-          raise ArgumentError, "`from_currency` (#{from_currency.iso_code}) or "\
-                               "`to_currency` (#{to_currency.iso_code}) should "\
+          raise ArgumentError, "`from_currency` (#{from_currency.iso_code}) or " \
+                               "`to_currency` (#{to_currency.iso_code}) should " \
                                "match the base currency #{@base_currency.iso_code}"
         end
 
@@ -277,7 +276,7 @@ class Money
                fetch_provider_base_rate(currency, date)
 
         if rate.nil?
-          raise UnknownRate, "Rate from #{currency} to #{@base_currency} "\
+          raise UnknownRate, "Rate from #{currency} to #{@base_currency} " \
                              "on #{date} not found"
         end
 
@@ -287,12 +286,12 @@ class Money
       def fetch_stored_base_rate(currency, date)
         date_rate_hash = @store.get_rates(currency)
 
-        if date_rate_hash && !date_rate_hash.empty?
-          rate = date_rate_hash[date.iso8601]
-          set_base_rates(currency, date_rate_hash)
+        return unless date_rate_hash && !date_rate_hash.empty?
 
-          rate
-        end
+        rate = date_rate_hash[date.iso8601]
+        set_base_rates(currency, date_rate_hash)
+
+        rate
       end
 
       def fetch_provider_base_rate(currency, date)
@@ -301,13 +300,9 @@ class Money
         date_rate_hash = currency_date_rate_hash[currency.iso_code]
         rate = date_rate_hash && date_rate_hash[date.iso8601]
 
-        if currency_date_rate_hash && !currency_date_rate_hash.empty?
-          @store.add_rates(currency_date_rate_hash)
-        end
+        @store.add_rates(currency_date_rate_hash) if currency_date_rate_hash && !currency_date_rate_hash.empty?
 
-        if date_rate_hash && !date_rate_hash.empty?
-          set_base_rates(currency, date_rate_hash)
-        end
+        set_base_rates(currency, date_rate_hash) if date_rate_hash && !date_rate_hash.empty?
 
         rate
       end
@@ -344,8 +339,8 @@ class Money
   # - +datetime+ - The +Date+ to get the exchange rate from. If +Time+ is passed instead, it's converted to the UTC +Date+.
   # - +rounding_method+ - This parameter is ignored in this version of the gem.
 
-  def exchange_to_historical(other_currency, datetime, &rounding_method)
+  def exchange_to_historical(other_currency, datetime, &)
     Bank::Historical.instance.exchange_with_historical(self, other_currency,
-                                                       datetime, &rounding_method)
+                                                       datetime, &)
   end
 end
